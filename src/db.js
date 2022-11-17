@@ -13,9 +13,18 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
 
 sequelize.authenticate().then(() => {
   logger.inf('Coneccion establecida con exito a la base de datos!');
-  models(sequelize);
 }).catch((error) => {
   logger.err('Error al conectarse a la base de datos: ', error);
 });
 
-module.exports = sequelize;
+models(sequelize);
+const {
+  Employee, Roll, Brand, Color,
+} = sequelize.models;
+
+Employee.hasOne(Roll);
+Roll.hasMany(Employee);
+
+module.exports = {
+  db: sequelize, Employee, Roll, Brand, Color,
+};

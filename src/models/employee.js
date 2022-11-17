@@ -8,5 +8,5 @@ module.exports = (sequelize) => {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
     },
-  }, { sequelize, modelName: 'User', timestamps: false });
+  }, { sequelize, modelName: 'Employee', timestamps: false });
 };

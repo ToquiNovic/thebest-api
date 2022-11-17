@@ -1,18 +1,16 @@
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class Roll extends Model {}
-  Roll.init({
+  class Brand extends Model {}
+  Brand.init({
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
-      unique: true,
       defaultValue: DataTypes.UUIDV4,
     },
-    role: {
+    brand: {
       type: DataTypes.ENUM,
-      values: ['ADMIN', 'AUXIL', 'OPERA'],
-      defaultValue: 'OPERA',
+      values: ['AKT', 'Bajaj', 'Honda', 'Suzuki', 'Yamaha', 'Other', 'Pulsar', 'KTM'],
     },
-  }, { sequelize, modelName: 'Roll', timestamps: false });
+  }, { sequelize, modelName: 'Brand', timestamps: false });
 };
