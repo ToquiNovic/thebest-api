@@ -8,5 +8,25 @@ module.exports = (sequelize) => {
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
     },
+    dni: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: true,
+    },
+    names: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    surnames: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    phone: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    birthDate: {
+      type: DataTypes.DATE,
+    },
   }, { sequelize, modelName: 'Employee', timestamps: false });
 };

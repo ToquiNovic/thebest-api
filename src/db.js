@@ -19,12 +19,18 @@ sequelize.authenticate().then(() => {
 
 models(sequelize);
 const {
-  Employee, Roll, Brand, Color,
+  Employee, Roll, Brand, Color, Motorcycle, Person,
 } = sequelize.models;
 
 Employee.hasOne(Roll);
 Roll.hasMany(Employee);
 
+Motorcycle.hasOne(Brand);
+Brand.hasMany(Motorcycle);
+
+Motorcycle.hasOne(Color);
+Color.hasMany(Motorcycle);
+
 module.exports = {
-  db: sequelize, Employee, Roll, Brand, Color,
+  db: sequelize, Employee, Roll, Brand, Color, Motorcycle, Person,
 };
