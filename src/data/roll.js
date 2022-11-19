@@ -1,11 +1,5 @@
 module.exports = [
-  {
-    role: 'ADMIN',
-  },
-  {
-    role: 'AUXIL',
-  },
-  {
-    role: 'OPERA',
-  },
+  { role: 'ADMIN' },
+  { role: 'AUXIL' },
+  { role: 'OPERA' },
 ];

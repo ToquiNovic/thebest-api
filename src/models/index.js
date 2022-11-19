@@ -4,6 +4,9 @@ const brand = require('./brand');
 const color = require('./color');
 const motorcycle = require('./motorcycle');
 const person = require('./person');
+const combo = require('./combo');
+const team = require('./team');
+const factura = require('./factura');
 
 module.exports = (sequelize) => {
   person(sequelize);
@@ -12,4 +15,7 @@ module.exports = (sequelize) => {
   roll(sequelize);
   brand(sequelize);
   color(sequelize);
+  combo(sequelize);
+  team(sequelize);
+  factura(sequelize);
 };
