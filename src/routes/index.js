@@ -7,5 +7,6 @@ router.use('/brand', require('./brand'));
 router.use('/color', require('./color'));
 router.use('/employee', require('./employee'));
 router.use('/operator', require('./operarios'));
+router.use('/auxiliar', require('./auxiliar'));
 
 module.exports = router;
