@@ -1,14 +1,15 @@
 const app = require('./app');
-const {
-  db, Roll, Brand, Color,
-} = require('./db');
+const { db } = require('./db');
 const logger = require('./utils/logger');
 
+/**
 const rolls = require('./data/roll');
 const brands = require('./data/brand');
 const colors = require('./data/color');
+*/
 
-db.sync({ force: true }).then(async () => {
+db.sync().then(async () => {
+  /**
   try {
     await Roll.bulkCreate(rolls, { validate: true });
     await Brand.bulkCreate(brands, { validate: true });
@@ -16,6 +17,7 @@ db.sync({ force: true }).then(async () => {
   } catch (error) {
     logger.err(error);
   }
+  */
 
   try {
     await app.listen(app.get('port'));

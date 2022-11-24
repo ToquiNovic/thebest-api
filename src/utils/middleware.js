@@ -27,11 +27,11 @@ module.exports = {
     if (token == null) {
       res.status(403).json({ msg: 'Auth Error' });
     } else {
-      jwt.verify(token, JWT_KEY, (err, id) => {
+      jwt.verify(token, JWT_KEY, (err, user) => {
         if (err) {
           res.status(404).json({ msg: 'Token Error' });
         } else {
-          req.id = id;
+          req.user = user;
           next();
         }
       });
