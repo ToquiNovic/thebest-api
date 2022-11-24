@@ -1,9 +1,8 @@
 const employeeRouter = require('express').Router();
-const { getAllEmployee } = require('../controllers/employee');
+const { Employee, Roll } = require('../db');
 
-employeeRouter.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  res.json(await getAllEmployee(id));
+employeeRouter.get('/', async (req, res) => {
+  res.json(await Employee.findAll({ include: Roll }));
 });
 
 module.exports = employeeRouter;

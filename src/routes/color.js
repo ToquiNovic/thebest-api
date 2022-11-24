@@ -1,8 +1,8 @@
 const routerColor = require('express').Router();
-const { getColors } = require('../controllers/color');
+const { Color } = require('../db');
 
 routerColor.get('/', async (req, res) => {
-  res.json(await getColors());
+  res.json(await Color.findAll());
 });
 
 module.exports = routerColor;

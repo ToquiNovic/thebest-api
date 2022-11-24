@@ -1,8 +1,8 @@
 const routerBrand = require('express').Router();
-const { getBrands } = require('../controllers/brand');
+const { Brand } = require('../db');
 
 routerBrand.get('/', async (req, res) => {
-  res.json(await getBrands());
+  res.json(await Brand.findAll());
 });
 
 module.exports = routerBrand;

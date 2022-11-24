@@ -26,14 +26,17 @@ routerLogin.post('/login', async (req, res) => {
         res.status(400).json({ msg: 'Error' });
       } else {
         res.json({
-          id, names, role, token,
+          id,
+          names,
+          role,
+          token,
         });
       }
     });
   }
 });
 
-routerLogin.post('/singup', verifyToken, async (req, res) => {
+routerLogin.post('/signup', verifyToken, async (req, res) => {
   const employee = req.body;
 
   if (req.user.role !== 'ADMIN') {
@@ -46,7 +49,12 @@ routerLogin.post('/singup', verifyToken, async (req, res) => {
     });
 
     if (!user) {
-      res.json(await Employee.create(employee));
+      const defaultRoll = await Roll.findOne({
+        where: {
+          role: 'OPERA',
+        },
+      });
+      res.json(await Employee.create({ ...employee, RollId: defaultRoll.id }));
     } else {
       res.status(400).json({ msg: 'Ya se encuentra registrado!' });
     }
