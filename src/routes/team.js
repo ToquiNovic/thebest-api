@@ -37,9 +37,20 @@ teamRouter.get('/', async (req, res) => {
 
 teamRouter.post('/', async (req, res) => {
   const { name, Employees } = req.body;
-  const newTeam = await Team.create({ name });
-  newTeam.setEmployees(Employees || []);
-  res.json(newTeam);
+
+  const team = await Team.findOne({
+    where: {
+      name,
+    },
+  });
+
+  if (!team) {
+    const newTeam = await Team.create({ name });
+    newTeam.setEmployees(Employees || []);
+    res.json(newTeam);
+  } else {
+    res.status(400).json({ msg: 'Ya hay un equipo con ese nombre!' });
+  }
 });
 
 teamRouter.put('/:id', async (req, res) => {
