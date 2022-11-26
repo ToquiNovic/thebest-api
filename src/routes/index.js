@@ -9,5 +9,6 @@ router.use('/employee', require('./employee'));
 router.use('/operator', require('./operarios'));
 router.use('/auxiliar', require('./auxiliar'));
 router.use('/team', require('./team'));
+router.use('/combo', require('./combo'));
 
 module.exports = router;
