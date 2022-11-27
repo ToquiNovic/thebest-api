@@ -29,6 +29,7 @@ db.sync(/** { force: true } */).then(async () => {
       password: '123',
       phone: '3027485520',
       RollId: admin.id,
+      commission: 0,
     });
   } catch (error) {
     logger.err(error);

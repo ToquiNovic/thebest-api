@@ -42,6 +42,10 @@ module.exports = (sequelize) => {
       birthDate: {
         type: DataTypes.DATE,
       },
+      commission: {
+        type: DataTypes.DECIMAL,
+        allowNull: false,
+      },
     },
     { sequelize, modelName: 'Employee', timestamps: false },
   );
