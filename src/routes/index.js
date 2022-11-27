@@ -10,5 +10,6 @@ router.use('/operator', require('./operarios'));
 router.use('/auxiliar', require('./auxiliar'));
 router.use('/team', require('./team'));
 router.use('/combo', require('./combo'));
+router.use('/moto', require('./moto'));
 
 module.exports = router;
