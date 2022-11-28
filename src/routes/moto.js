@@ -1,5 +1,7 @@
 const motoRouter = require('express').Router();
-const { Motorcycle, Person } = require('../db');
+const {
+  Motorcycle, Person,
+} = require('../db');
 
 motoRouter.get('/', async (req, res) => {
   res.json(await Motorcycle.findAll());
@@ -15,25 +17,39 @@ motoRouter.get('/:plaque', async (req, res) => {
   });
 
   if (!moto) {
-    res.status(404).json({ msg: 'No esta registrada!' });
+    res.status(404).json({ msg: 'No se encuentra registrada!' });
   } else {
     res.json(moto);
   }
 });
 
 motoRouter.post('/', async (req, res) => {
-  const { plaque } = req.body;
-  const moto = await Motorcycle.findOne({
+  const { moto, person } = req.body;
+
+  let user = await Person.findOne({
     where: {
-      plaque,
+      phone: person.phone,
     },
   });
 
-  if (!moto) {
-    res.json(await Motorcycle.create({ plaque }));
-  } else {
-    res.status(400).json({ msg: 'Ya se encuentra registrada' });
+  if (!user) {
+    user = await Person.create(person);
   }
+
+  let motocycle = await Motorcycle.findOne({
+    where: {
+      plaque: moto.plaque,
+    },
+  });
+
+  if (!motocycle) {
+    motocycle = await Motorcycle.create({
+      ...moto,
+      PersonId: user.dataValues.id,
+    });
+  }
+
+  res.json({ user, motocycle });
 });
 
 module.exports = motoRouter;
