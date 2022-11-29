@@ -63,6 +63,8 @@ Factura.belongsTo(Fecha);
 Factura.belongsToMany(Employee, { through: 'EmployeeFactura' });
 Employee.belongsToMany(Factura, { through: 'EmployeeFactura' });
 
+const { EmployeeFactura } = sequelize.models;
+
 module.exports = {
   db: sequelize,
   Person,
@@ -75,4 +77,5 @@ module.exports = {
   Team,
   Factura,
   Fecha,
+  EmployeeFactura,
 };

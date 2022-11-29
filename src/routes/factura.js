@@ -1,12 +1,20 @@
 const routerFactura = require('express').Router();
-const { createFactura } = require('../controllers/factura');
+const {
+  createFactura,
+  getFacturaMotoCombo,
+} = require('../controllers/factura');
 const { getFecha } = require('../controllers/fecha');
 const { getMotocycle } = require('../controllers/moto');
 const { getPerson } = require('../controllers/person');
-const { Factura } = require('../db');
+const { Factura, Employee } = require('../db');
 
 routerFactura.get('/', async (req, res) => {
   res.json(await Factura.findAll());
+});
+
+routerFactura.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  res.json(await getFacturaMotoCombo(id));
 });
 
 routerFactura.post('/', async (req, res) => {
@@ -18,6 +26,7 @@ routerFactura.post('/', async (req, res) => {
 
   const newFactura = {
     ...factura,
+    description: `Precio: ${factura.price} + ${factura.overrun}`,
     total: +factura.price + +factura.overrun,
     MotorcycleId: motorcycle.id,
     FechaId: fecha.id,
@@ -25,7 +34,21 @@ routerFactura.post('/', async (req, res) => {
 
   const factu = await createFactura(newFactura);
 
-  res.json({ person, motorcycle, factu });
+  res.json(factu);
+});
+
+routerFactura.post('/:id', async (req, res) => {
+  const { id } = req.params;
+  const { Employees } = req.body;
+
+  const factura = await Factura.findByPk(id, { include: Employee });
+
+  if (factura.dataValues.Employees === 0) {
+    factura.setEmployees(Employees);
+    res.json(factura);
+  } else {
+    res.status(400).json({ msg: 'Esta moto ya tiene un Equipo asignado!' });
+  }
 });
 
 module.exports = routerFactura;

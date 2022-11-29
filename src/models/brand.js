@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
       defaultValue: DataTypes.UUIDV4,
     },
     brand: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
   }, { sequelize, modelName: 'Brand', timestamps: false });

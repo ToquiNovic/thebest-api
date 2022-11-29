@@ -1,15 +1,15 @@
 const motoRouter = require('express').Router();
-const { addMotocycle } = require('../controllers/moto');
-const { addPerson } = require('../controllers/person');
-const {
-  Motorcycle,
-  Person,
-  Employee,
-  Team,
-} = require('../db');
+const { Motorcycle, Person, Factura } = require('../db');
 
 motoRouter.get('/', async (req, res) => {
-  res.json(await Motorcycle.findAll());
+  res.json(
+    await Motorcycle.findAll({
+      where: {
+        isActive: true,
+      },
+      include: [Factura, Person],
+    }),
+  );
 });
 
 motoRouter.get('/:plaque', async (req, res) => {
@@ -26,24 +26,6 @@ motoRouter.get('/:plaque', async (req, res) => {
   } else {
     res.json(moto);
   }
-});
-
-motoRouter.post('/', async (req, res) => {
-  const { moto, person, factura } = req.body;
-
-  const user = await addPerson(person);
-
-  const motocycle = await addMotocycle({ ...moto, PersonId: user.dataValues.id });
-
-  const team = await Team.findByPk(factura.TeamId, {
-    include: Employee,
-  });
-
-  res.json({
-    team,
-    user,
-    motocycle,
-  });
 });
 
 module.exports = motoRouter;
