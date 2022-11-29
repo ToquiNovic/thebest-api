@@ -1,40 +1,65 @@
 const app = require('./app');
-const { db } = require('./db');
+const {
+  db,
+  Motorcycle,
+  Color,
+  Brand,
+  Person,
+  Roll,
+  Employee,
+  Team,
+  Combo,
+  Factura,
+  Fecha,
+} = require('./db');
 const logger = require('./utils/logger');
 
-/**
-const {
-  Roll, Brand, Color, Employee,
-} = require('./db');
-const rolls = require('./data/roll');
-const brands = require('./data/brand');
-const colors = require('./data/color');
-*/
+db.sync({ force: true }).then(async () => {
+  const color = await Color.create({ color: 'Rojo' });
+  const marca = await Brand.create({ brand: 'Suzuki' });
+  const persona = await Person.create({
+    phone: 3222255497,
+    fullName: 'Dairo Garcia',
+  });
 
-db.sync(/** { force: true } */).then(async () => {
-  /**
-  try {
-    await Roll.bulkCreate(rolls, { validate: true });
-    await Brand.bulkCreate(brands, { validate: true });
-    await Color.bulkCreate(colors, { validate: true });
-    const admin = await Roll.findOne({
-      where: {
-        role: 'ADMIN',
-      },
-    });
-    await Employee.create({
-      dni: '1117531976',
-      names: 'Dairo',
-      surnames: 'Garcia Naranjo',
-      password: '123',
-      phone: '3027485520',
-      RollId: admin.id,
-      commission: 0,
-    });
-  } catch (error) {
-    logger.err(error);
-  }
-  */
+  const moto = await Motorcycle.create({
+    plaque: 'GJW60D',
+    ColorId: color.id,
+    BrandId: marca.id,
+    PersonId: persona.id,
+  });
+
+  const rolOperario = await Roll.create({ role: 'OPERA' });
+  const empleado = await Employee.create({
+    dni: 1117531976,
+    names: 'Dairo',
+    surnames: 'Garcia',
+    phone: 3222255497,
+    commission: 40,
+    RollId: rolOperario.id,
+  });
+  const empleado1 = await Employee.create({
+    dni: 1117531978,
+    names: 'Dairo',
+    surnames: 'Garcia',
+    phone: 3222255497,
+    commission: 40,
+    RollId: rolOperario.id,
+  });
+
+  const equipo = await Team.create({ name: 'Equipo1' });
+  equipo.setEmployees([empleado.id, empleado1.id]);
+
+  const combo = await Combo.create({ name: 'Combo2', price: 10000 });
+
+  const fecha = await Fecha.create({});
+
+  const factura = await Factura.create({
+    total: 15000, MotorcycleId: moto.id, ComboId: combo.id, FechaId: fecha.id,
+  });
+
+  factura.setEmployees([empleado.id, empleado1.id]);
+
   try {
     await app.listen(app.get('port'));
     logger.inf(`Server corriendo en el puerto: ${app.get('port')}`);

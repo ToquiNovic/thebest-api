@@ -1,5 +1,4 @@
-/* eslint-disable max-classes-per-file */
-const { Sequelize, Model, DataTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const models = require('./models');
 const {
   DB_NAME, DB_USER, DB_PASS, DB_HOST,
@@ -22,17 +21,22 @@ sequelize
   });
 
 models(sequelize);
+
 const {
+  Person,
+  Motorcycle,
   Employee,
   Roll,
   Brand,
   Color,
-  Motorcycle,
-  Person,
+  Combo,
   Team,
   Factura,
-  Combo,
+  Fecha,
 } = sequelize.models;
+
+Person.hasMany(Motorcycle);
+Motorcycle.belongsTo(Person);
 
 Brand.hasMany(Motorcycle);
 Motorcycle.belongsTo(Brand);
@@ -40,81 +44,35 @@ Motorcycle.belongsTo(Brand);
 Color.hasMany(Motorcycle);
 Motorcycle.belongsTo(Color);
 
-Person.hasMany(Motorcycle);
-Motorcycle.belongsTo(Person);
+Team.hasMany(Employee);
+
+Employee.belongsTo(Team);
 
 Roll.hasMany(Employee);
 Employee.belongsTo(Roll);
 
-Team.hasMany(Employee);
-Employee.belongsTo(Team);
-
 Combo.hasMany(Factura);
 Factura.belongsTo(Combo);
 
-class EmployeeFacturaModel extends Model {}
-EmployeeFacturaModel.init(
-  {
-    EmployeeID: {
-      type: DataTypes.UUID,
-      references: {
-        model: Employee,
-        key: 'id',
-      },
-    },
-    FacturaID: {
-      type: DataTypes.UUID,
-      references: {
-        model: Factura,
-        key: 'id',
-      },
-    },
-    date: {
-      type: DataTypes.DATEONLY,
-      defaultValue: DataTypes.NOW,
-    },
-  },
-  { sequelize, modelName: 'EmployeeFactura', timestamps: false },
-);
+Motorcycle.hasMany(Factura);
+Factura.belongsTo(Motorcycle);
 
-class MotorcycleFacturaModel extends Model {}
-MotorcycleFacturaModel.init(
-  {
-    MotorcycleID: {
-      type: DataTypes.UUID,
-      references: {
-        model: Motorcycle,
-        key: 'id',
-      },
-    },
-    FacturaID: {
-      type: DataTypes.UUID,
-      references: {
-        model: Factura,
-        key: 'id',
-      },
-    },
-    date: {
-      type: DataTypes.DATEONLY,
-      defaultValue: DataTypes.NOW,
-    },
-  },
-  { sequelize, modelName: 'MotorcycleFactura', timestamps: false },
-);
+Fecha.hasMany(Factura);
+Factura.belongsTo(Fecha);
 
-const { EmployeeFactura, MotorcycleFactura } = sequelize.models;
+Factura.belongsToMany(Employee, { through: 'EmployeeFactura' });
+Employee.belongsToMany(Factura, { through: 'EmployeeFactura' });
 
 module.exports = {
   db: sequelize,
+  Person,
+  Motorcycle,
   Employee,
   Roll,
   Brand,
   Color,
-  Motorcycle,
-  Person,
+  Combo,
   Team,
   Factura,
-  Combo,
-  EmployeeFactura,
-  MotorcycleFactura,
+  Fecha,
 };

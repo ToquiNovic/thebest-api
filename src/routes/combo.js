@@ -5,6 +5,10 @@ comboRouter.get('/', async (req, res) => {
   res.json(await Combo.findAll());
 });
 
+comboRouter.get('/:id', async (req, res) => {
+  res.json(await Combo.findByPk(req.params.id));
+});
+
 comboRouter.post('/', async (req, res) => {
   const newCombo = req.body;
 

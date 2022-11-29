@@ -1,7 +1,7 @@
 const routerLogin = require('express').Router();
 const jwt = require('jsonwebtoken');
 const { JWT_KEY } = require('../config');
-const { Employee, Roll } = require('../db');
+const { Employee, Roll, Register } = require('../db');
 const { decrypt } = require('../utils/encrypt');
 const { verifyToken } = require('../utils/middleware');
 
@@ -54,7 +54,14 @@ routerLogin.post('/signup', verifyToken, async (req, res) => {
           role: 'OPERA',
         },
       });
-      res.json(await Employee.create({ ...employee, RollId: defaultRoll.id }));
+      const register = await Register.create();
+      const newEmploye = await Employee.create({
+        ...employee,
+        RollId: defaultRoll.id,
+        RegisterId: register.dataValues.id,
+      });
+
+      res.json(newEmploye);
     } else {
       res.status(400).json({ msg: 'Ya se encuentra registrado!' });
     }

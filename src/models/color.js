@@ -9,8 +9,8 @@ module.exports = (sequelize) => {
       defaultValue: DataTypes.UUIDV4,
     },
     color: {
-      type: DataTypes.ENUM,
-      values: ['black', 'red', 'white', 'gray', 'blue', 'other'],
+      type: DataTypes.STRING(10),
+      allowNull: false,
     },
   }, { sequelize, modelName: 'Color', timestamps: false });
 };

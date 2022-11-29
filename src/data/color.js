@@ -1,8 +1,8 @@
 module.exports = [
-  { color: 'red' },
-  { color: 'black' },
-  { color: 'white' },
-  { color: 'gray' },
-  { color: 'blue' },
-  { color: 'other' },
+  { color: 'Rojo' },
+  { color: 'Negro' },
+  { color: 'Blanco' },
+  { color: 'Gris' },
+  { color: 'Azul' },
+  { color: 'Otros' },
 ];

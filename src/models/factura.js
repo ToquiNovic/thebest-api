@@ -11,12 +11,13 @@ module.exports = (sequelize) => {
     description: {
       type: DataTypes.STRING,
     },
-    hour: {
-      type: DataTypes.TIME,
-    },
     total: {
       type: DataTypes.DECIMAL,
       allowNull: false,
+    },
+    isPaid: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     },
   }, { sequelize, modelName: 'Factura', timestamps: false });
 };

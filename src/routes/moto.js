@@ -1,6 +1,11 @@
 const motoRouter = require('express').Router();
+const { addMotocycle } = require('../controllers/moto');
+const { addPerson } = require('../controllers/person');
 const {
-  Motorcycle, Person,
+  Motorcycle,
+  Person,
+  Employee,
+  Team,
 } = require('../db');
 
 motoRouter.get('/', async (req, res) => {
@@ -24,32 +29,21 @@ motoRouter.get('/:plaque', async (req, res) => {
 });
 
 motoRouter.post('/', async (req, res) => {
-  const { moto, person } = req.body;
+  const { moto, person, factura } = req.body;
 
-  let user = await Person.findOne({
-    where: {
-      phone: person.phone,
-    },
+  const user = await addPerson(person);
+
+  const motocycle = await addMotocycle({ ...moto, PersonId: user.dataValues.id });
+
+  const team = await Team.findByPk(factura.TeamId, {
+    include: Employee,
   });
 
-  if (!user) {
-    user = await Person.create(person);
-  }
-
-  let motocycle = await Motorcycle.findOne({
-    where: {
-      plaque: moto.plaque,
-    },
+  res.json({
+    team,
+    user,
+    motocycle,
   });
-
-  if (!motocycle) {
-    motocycle = await Motorcycle.create({
-      ...moto,
-      PersonId: user.dataValues.id,
-    });
-  }
-
-  res.json({ user, motocycle });
 });
 
 module.exports = motoRouter;

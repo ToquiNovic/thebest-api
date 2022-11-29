@@ -1,16 +1,12 @@
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class Brand extends Model {}
-  Brand.init({
+  class DetailsFactura extends Model {}
+  DetailsFactura.init({
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4,
     },
-    brand: {
-      type: DataTypes.STRING(10),
-      allowNull: false,
-    },
-  }, { sequelize, modelName: 'Brand', timestamps: false });
+  }, { sequelize, modelName: 'DetailsFactura', timestamps: false });
 };
