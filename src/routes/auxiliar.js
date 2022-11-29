@@ -1,17 +1,8 @@
 const auxiliarRoute = require('express').Router();
-const { Roll, Employee } = require('../db');
+const { getAuxiliares } = require('../controllers/employee');
 
 auxiliarRoute.get('/', async (req, res) => {
-  const auxiliares = await Roll.findOne({
-    include: Employee,
-    attributes: ['id', 'dni', 'names', 'surnames'],
-    where: {
-      role: 'AUXIL',
-      attribute: ['role'],
-    },
-  });
-
-  res.json(auxiliares);
+  res.json(await getAuxiliares());
 });
 
 module.exports = auxiliarRoute;

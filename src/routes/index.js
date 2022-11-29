@@ -11,7 +11,6 @@ router.use('/team', require('./team'));
 router.use('/combo', require('./combo'));
 router.use('/moto', require('./moto'));
 router.use('/factura', require('./factura'));
-router.use('/register', require('./register'));
 router.use('/prueba', require('./prueba'));
 
 module.exports = router;

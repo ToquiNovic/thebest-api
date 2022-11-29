@@ -10,16 +10,16 @@ comboRouter.get('/:id', async (req, res) => {
 });
 
 comboRouter.post('/', async (req, res) => {
-  const newCombo = req.body;
+  const { name, price } = req.body;
 
   const combo = await Combo.findOne({
     where: {
-      title: newCombo.title,
+      name,
     },
   });
 
   if (!combo) {
-    res.json(await Combo.create(newCombo));
+    res.json(await Combo.create({ name, price }));
   } else {
     res.status(400).json({ msg: 'Ya existe un combo con ese nombre' });
   }

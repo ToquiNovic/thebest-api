@@ -1,5 +1,4 @@
 const routerFactura = require('express').Router();
-const { addFactura } = require('../controllers/factura');
 const { Factura } = require('../db');
 
 routerFactura.get('/', async (req, res) => {
@@ -7,7 +6,8 @@ routerFactura.get('/', async (req, res) => {
 });
 
 routerFactura.post('/', async (req, res) => {
-  res.json(await addFactura(req.body));
+  const { moto, factura, persona } = req.body;
+  res.json({ moto, factura, persona });
 });
 
 module.exports = routerFactura;

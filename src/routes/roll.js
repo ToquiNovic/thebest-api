@@ -1,8 +1,8 @@
 const rollRouter = require('express').Router();
-const { Roll } = require('../db');
+const { getRolesMenores } = require('../controllers/roll');
 
 rollRouter.get('/', async (req, res) => {
-  res.json(await Roll.findAll());
+  res.json(await getRolesMenores());
 });
 
 module.exports = rollRouter;
