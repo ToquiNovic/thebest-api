@@ -19,5 +19,10 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
     },
+    paymentMethod: {
+      type: DataTypes.ENUM,
+      allowNull: false,
+      values: ['Nequi', 'Efectivo'],
+    },
   }, { sequelize, modelName: 'Factura', timestamps: false });
 };

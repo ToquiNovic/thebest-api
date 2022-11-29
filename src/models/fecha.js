@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
       defaultValue: DataTypes.UUIDV4,
     },
     date: {
-      type: DataTypes.DATE,
+      type: DataTypes.STRING,
       defaultValue: DataTypes.NOW,
       set(value) {
         this.setDataValue('date', value.toLocaleString('es-CO', { timeZone: 'UTC' }));

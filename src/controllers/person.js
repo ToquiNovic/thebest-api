@@ -1,7 +1,7 @@
 const { Person } = require('../db');
 
 module.exports = {
-  addPerson: async ({ phone, fullName }) => {
+  getPerson: async ({ phone, fullName }) => {
     const user = await Person.findOne({
       where: {
         phone,
@@ -12,6 +12,6 @@ module.exports = {
       return Person.create({ phone, fullName });
     }
 
-    return user.update({ phone, fullName });
+    return user.update({ fullName });
   },
 };

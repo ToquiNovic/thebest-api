@@ -1,7 +1,7 @@
 const { Motorcycle } = require('../db');
 
 module.exports = {
-  addMotocycle: async ({
+  getMotocycle: async ({
     plaque,
     ColorId,
     BrandId,
@@ -19,6 +19,6 @@ module.exports = {
       });
     }
 
-    return moto.update({ PersonId });
+    return moto.update({ PersonId, ColorId });
   },
 };
