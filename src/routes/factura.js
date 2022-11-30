@@ -43,7 +43,7 @@ routerFactura.post('/:id', async (req, res) => {
 
   const factura = await Factura.findByPk(id, { include: Employee });
 
-  if (factura.dataValues.Employees === 0) {
+  if (factura.dataValues.Employees.length === 0) {
     factura.setEmployees(Employees);
     res.json(factura);
   } else {

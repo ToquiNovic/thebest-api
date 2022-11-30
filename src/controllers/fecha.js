@@ -1,4 +1,6 @@
-const { Fecha, Factura, Motorcycle } = require('../db');
+const {
+  Fecha, Factura, Motorcycle, Employee,
+} = require('../db');
 
 module.exports = {
   getFecha: async () => {
