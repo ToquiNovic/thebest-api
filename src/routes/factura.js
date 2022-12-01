@@ -7,6 +7,7 @@ const { getFecha } = require('../controllers/fecha');
 const { getMotocycle } = require('../controllers/moto');
 const { getPerson } = require('../controllers/person');
 const { Factura, Employee } = require('../db');
+const { verifyToken } = require('../utils/middleware');
 
 routerFactura.get('/', async (req, res) => {
   res.json(await Factura.findAll());
@@ -49,6 +50,23 @@ routerFactura.post('/:id', async (req, res) => {
   } else {
     res.status(400).json({ msg: 'Esta moto ya tiene un Equipo asignado!' });
   }
+});
+
+routerFactura.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const factura = await Factura.findByPk(id);
+  factura.update(req.body);
+  res.json(factura);
+});
+
+routerFactura.delete('/:id', verifyToken, async (req, res) => {
+  const { id } = req.params;
+  const factura = await Factura.destroy({
+    where: {
+      id,
+    },
+  });
+  res.json(factura);
 });
 
 module.exports = routerFactura;
