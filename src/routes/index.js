@@ -13,5 +13,6 @@ router.use('/moto', require('./moto'));
 router.use('/factura', require('./factura'));
 router.use('/prueba', require('./prueba'));
 router.use('/fecha', require('./fecha'));
+router.use('/person', require('./person'));
 
 module.exports = router;

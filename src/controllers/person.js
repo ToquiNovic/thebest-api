@@ -1,4 +1,4 @@
-const { Person } = require('../db');
+const { Person, Motorcycle } = require('../db');
 
 module.exports = {
   getPerson: async ({ phone, fullName }) => {
@@ -13,5 +13,15 @@ module.exports = {
     }
 
     return user.update({ fullName });
+  },
+  getPersonID: async (id) => {
+    const persona = await Person.findByPk(id, {
+      include: {
+        model: Motorcycle,
+        required: false,
+        attributes: ['id', 'plaque'],
+      },
+    });
+    return persona;
   },
 };

@@ -27,7 +27,9 @@ routerFactura.post('/', async (req, res) => {
 
   const newFactura = {
     ...factura,
-    description: `Precio: ${factura.price} + ${factura.overrun}`,
+    description: `Precio: ${factura.price} + ${
+      factura.overrun ? factura.overrun : '0'
+    }`,
     total: +factura.price + +factura.overrun,
     MotorcycleId: motorcycle.id,
     FechaId: fecha.id,

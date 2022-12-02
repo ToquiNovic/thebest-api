@@ -35,13 +35,59 @@ module.exports = {
             {
               model: Motorcycle,
               required: false,
-              attributes: ['id', 'plaque', 'isActive'],
+              attributes: ['id', 'plaque', 'isActive', 'PersonId'],
             },
           ],
         },
       ],
     });
 
+    if (date) {
+      date.dataValues.motorcycleWashing = date.dataValues.Facturas.length;
+    }
+
     return date;
+  },
+  getFacturasEmployee: async (id, date) => {
+    const employee = await Employee.findByPk(id, {
+      attributes: ['names', 'surnames', 'commission'],
+      include: {
+        model: Factura,
+        required: false,
+        attributes: ['total'],
+        include: [
+          {
+            model: Fecha,
+            required: false,
+            attributes: [],
+            where: {
+              date,
+            },
+          },
+          {
+            model: Employee,
+            required: false,
+            attributes: ['id'],
+          },
+        ],
+      },
+    });
+
+    const dataFactura = employee.dataValues.Facturas.map(
+      ({ total, Employees }) => total / Employees.length,
+    );
+
+    const { names, surnames, commission } = employee.dataValues;
+
+    const percent = commission / 100;
+    return {
+      id,
+      names,
+      surnames,
+      commission,
+      dataFactura,
+      gananciasDia: dataFactura.reduce((acc, cur) => acc + (cur * percent), 0),
+      motorcycleWashing: dataFactura.length,
+    };
   },
 };
