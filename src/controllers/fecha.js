@@ -50,7 +50,7 @@ module.exports = {
   },
   getFacturasEmployee: async (id, date) => {
     const employee = await Employee.findByPk(id, {
-      attributes: ['names', 'surnames', 'commission'],
+      attributes: ['names', 'surnames', 'commission', 'dni'],
       include: {
         model: Factura,
         required: false,
@@ -74,19 +74,25 @@ module.exports = {
     });
 
     const dataFactura = employee.dataValues.Facturas.map(
-      ({ total, Employees }) => total / Employees.length,
+      ({ total, Employees }) => ({ total, countEmployees: Employees.length }),
     );
 
-    const { names, surnames, commission } = employee.dataValues;
+    const {
+      names, surnames, commission, dni,
+    } = employee.dataValues;
 
     const percent = commission / 100;
     return {
       id,
+      dni,
       names,
       surnames,
       commission,
+      gananciasDia: dataFactura.reduce(
+        (acc, cur) => acc + (cur.total / cur.countEmployees) * percent,
+        0,
+      ),
       dataFactura,
-      gananciasDia: dataFactura.reduce((acc, cur) => acc + (cur * percent), 0),
       motorcycleWashing: dataFactura.length,
     };
   },

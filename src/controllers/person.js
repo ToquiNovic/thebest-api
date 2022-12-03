@@ -1,4 +1,12 @@
-const { Person, Motorcycle } = require('../db');
+const {
+  Person,
+  Motorcycle,
+  Factura,
+  Brand,
+  Color,
+  Fecha,
+  Combo,
+} = require('../db');
 
 module.exports = {
   getPerson: async ({ phone, fullName }) => {
@@ -19,7 +27,26 @@ module.exports = {
       include: {
         model: Motorcycle,
         required: false,
-        attributes: ['id', 'plaque'],
+        attributes: ['id', 'plaque', 'isActive'],
+        include: [
+          { model: Brand, required: false, attributes: ['brand'] },
+          { model: Color, required: false, attributes: ['color'] },
+          {
+            model: Factura,
+            required: false,
+            attributes: [
+              'id',
+              'description',
+              'total',
+              'isPaid',
+              'paymentMethod',
+            ],
+            include: [
+              { model: Fecha, required: false, attributes: ['date'] },
+              { model: Combo, required: false },
+            ],
+          },
+        ],
       },
     });
     return persona;

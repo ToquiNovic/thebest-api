@@ -45,7 +45,6 @@ Color.hasMany(Motorcycle);
 Motorcycle.belongsTo(Color);
 
 Team.hasMany(Employee);
-
 Employee.belongsTo(Team);
 
 Roll.hasMany(Employee);
