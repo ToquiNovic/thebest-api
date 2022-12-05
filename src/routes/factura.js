@@ -2,6 +2,7 @@ const routerFactura = require('express').Router();
 const {
   createFactura,
   getFacturaMotoCombo,
+  getGanaciasTotales,
 } = require('../controllers/factura');
 const { getFecha } = require('../controllers/fecha');
 const { getMotocycle } = require('../controllers/moto');
@@ -10,7 +11,7 @@ const { Factura, Employee } = require('../db');
 const { verifyToken } = require('../utils/middleware');
 
 routerFactura.get('/', async (req, res) => {
-  res.json(await Factura.findAll());
+  res.json(await getGanaciasTotales());
 });
 
 routerFactura.get('/:id', async (req, res) => {

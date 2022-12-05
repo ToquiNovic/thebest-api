@@ -2,4 +2,4 @@
 /src/data
 package-lock.json
 .env
-/src/indexOP.js
+/src/indexSync.js
