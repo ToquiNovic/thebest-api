@@ -28,7 +28,7 @@ module.exports = {
         } else {
           info.Efectivo += tot;
         }
-        info.total = tot;
+        info.total += tot;
       });
 
       return ({ id: dataValues.id, date: dataValues.date, detail: info });
