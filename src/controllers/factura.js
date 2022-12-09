@@ -1,5 +1,5 @@
 const {
-  Factura, Motorcycle, Combo, Employee, Fecha,
+  Factura, Motorcycle, Combo, Employee, Fecha, Person,
 } = require('../db');
 
 module.exports = {
@@ -8,7 +8,9 @@ module.exports = {
     attributes: ['isPaid', 'id'],
     include: [
       { model: Employee, required: false, attributes: ['names'] },
-      { model: Motorcycle, required: false, attributes: ['plaque'] },
+      {
+        model: Motorcycle, required: false, attributes: ['plaque'], include: [{ model: Person, required: false, attributes: ['fullName', 'phone'] }],
+      },
       { model: Combo, required: false, attributes: ['name', 'price', 'description'] },
     ],
   }),

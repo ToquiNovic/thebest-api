@@ -59,10 +59,7 @@ module.exports = {
           {
             model: Fecha,
             required: false,
-            attributes: [],
-            where: {
-              date,
-            },
+            attributes: ['date'],
           },
           {
             model: Employee,
@@ -74,8 +71,16 @@ module.exports = {
     });
 
     const dataFactura = employee.dataValues.Facturas.map(
-      ({ total, Employees }) => ({ total, countEmployees: Employees.length }),
-    );
+      ({
+        total,
+        Employees,
+        Fecha,
+      }) => ({
+        total,
+        countEmployees: Employees.length,
+        date: Fecha.date,
+      }),
+    ).filter((elem) => elem.date === date);
 
     const {
       names, surnames, commission, dni,
