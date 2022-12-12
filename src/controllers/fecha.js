@@ -71,14 +71,10 @@ module.exports = {
     });
 
     const dataFactura = employee.dataValues.Facturas.map(
-      ({
-        total,
-        Employees,
-        Fecha,
-      }) => ({
-        total,
-        countEmployees: Employees.length,
-        date: Fecha.date,
+      (elem) => ({
+        total: elem.total,
+        countEmployees: elem.Employees.length,
+        date: elem.Fecha.date,
       }),
     ).filter((elem) => elem.date === date);
 

@@ -4,9 +4,10 @@ module.exports = (sequelize) => {
   class Factura extends Model {}
   Factura.init({
     id: {
-      type: DataTypes.UUID,
+      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
+      type: DataTypes.INTEGER,
     },
     description: {
       type: DataTypes.STRING,

@@ -8,8 +8,14 @@ const combo = require('./combo');
 const team = require('./team');
 const factura = require('./factura');
 const fecha = require('./fecha');
+const product = require('./Producto');
+const drawout = require('./drawout');
+const drawoutproduct = require('./drawoutproduct');
 
 module.exports = (sequelize) => {
+  drawoutproduct(sequelize);
+  drawout(sequelize);
+  product(sequelize);
   person(sequelize);
   motorcycle(sequelize);
   employee(sequelize);
