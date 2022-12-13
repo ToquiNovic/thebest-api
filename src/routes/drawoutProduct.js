@@ -1,11 +1,32 @@
 const drawoutproductRouter = require('express').Router();
 
-const { DrawOutProduct } = require('../db');
+const {
+  DrawOutProduct, Fecha, Employee, Product,
+} = require('../db');
 const { getFecha } = require('../controllers/fecha');
 const { verifyToken } = require('../utils/middleware');
 
 drawoutproductRouter.get('/', async (req, res) => {
-  res.json(await DrawOutProduct.findAll());
+  const data = await Product.findAll({
+    include: [
+      {
+        model: DrawOutProduct,
+        required: false,
+        attributes: ['id', 'amount'],
+        include: [
+          { model: Fecha, required: false, attributes: ['date'] },
+          {
+            model: Employee,
+            required: false,
+            attributes: ['names', 'surnames', 'id'],
+          },
+        ],
+      },
+    ],
+    attributes: ['id', 'quantityUnit', 'name', 'measure'],
+  });
+
+  res.json(data);
 });
 
 drawoutproductRouter.post('/', verifyToken, async (req, res) => {
