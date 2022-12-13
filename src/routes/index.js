@@ -14,5 +14,8 @@ router.use('/factura', require('./factura'));
 router.use('/prueba', require('./prueba'));
 router.use('/fecha', require('./fecha'));
 router.use('/person', require('./person'));
+router.use('/product', require('./product'));
+router.use('/retiroproducto', require('./drawoutProduct'));
+router.use('/retiro', require('./drawout'));
 
 module.exports = router;
