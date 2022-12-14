@@ -6,6 +6,8 @@ const {
   Color,
   Fecha,
   Combo,
+  Employee,
+  Team,
 } = require('../db');
 
 module.exports = {
@@ -34,16 +36,16 @@ module.exports = {
           {
             model: Factura,
             required: false,
-            attributes: [
-              'id',
-              'description',
-              'total',
-              'isPaid',
-              'paymentMethod',
-            ],
+            attributes: ['id', 'total', 'paymentMethod'],
             include: [
               { model: Fecha, required: false, attributes: ['date'] },
-              { model: Combo, required: false },
+              { model: Combo, required: false, attributes: ['name', 'price'] },
+              {
+                model: Employee,
+                required: false,
+                attributes: ['names'],
+                include: [{ model: Team, required: false, attributes: ['name'] }],
+              },
             ],
           },
         ],
