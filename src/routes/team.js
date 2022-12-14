@@ -35,6 +35,10 @@ teamRouter.get('/', async (req, res) => {
   }
 });
 
+teamRouter.get('/:id', async (req, res) => {
+  res.json(await Team.findByPk(req.params.id, { include: [{ model: Employee, required: false, attributes: ['id', 'names', 'surnames'] }] }));
+});
+
 teamRouter.post('/', async (req, res) => {
   const { name, Employees } = req.body;
 

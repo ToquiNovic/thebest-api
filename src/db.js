@@ -33,6 +33,9 @@ const {
   Team,
   Factura,
   Fecha,
+  Product,
+  DrawOut,
+  DrawOutProduct,
 } = sequelize.models;
 
 Person.hasMany(Motorcycle);
@@ -59,6 +62,21 @@ Factura.belongsTo(Motorcycle);
 Fecha.hasMany(Factura);
 Factura.belongsTo(Fecha);
 
+Fecha.hasMany(DrawOut);
+DrawOut.belongsTo(Fecha);
+
+Fecha.hasMany(DrawOutProduct);
+DrawOutProduct.belongsTo(Fecha);
+
+Product.hasMany(DrawOutProduct);
+DrawOutProduct.belongsTo(Product);
+
+Employee.hasMany(DrawOut);
+DrawOut.belongsTo(Employee);
+
+Employee.hasMany(DrawOutProduct);
+DrawOutProduct.belongsTo(Employee);
+
 Factura.belongsToMany(Employee, { through: 'EmployeeFactura' });
 Employee.belongsToMany(Factura, { through: 'EmployeeFactura' });
 
@@ -77,4 +95,7 @@ module.exports = {
   Factura,
   Fecha,
   EmployeeFactura,
+  Product,
+  DrawOut,
+  DrawOutProduct,
 };
