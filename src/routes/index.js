@@ -16,5 +16,6 @@ router.use('/person', require('./person'));
 router.use('/product', require('./product'));
 router.use('/retiroproducto', require('./drawoutProduct'));
 router.use('/retiro', require('./drawout'));
+router.use('/sale', require('./sale'));
 
 module.exports = router;
