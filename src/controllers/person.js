@@ -36,7 +36,7 @@ module.exports = {
           {
             model: Factura,
             required: false,
-            attributes: ['id', 'total', 'paymentMethod'],
+            attributes: ['id', 'total', 'paymentMethod', 'date'],
             include: [
               { model: Fecha, required: false, attributes: ['date'] },
               { model: Combo, required: false, attributes: ['name', 'price'] },
