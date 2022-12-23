@@ -47,12 +47,8 @@ routerFactura.post('/:id', async (req, res) => {
 
   const factura = await Factura.findByPk(id, { include: Employee });
 
-  if (factura.dataValues.Employees.length === 0) {
-    factura.setEmployees(Employees);
-    res.json(factura);
-  } else {
-    res.status(400).json({ msg: 'Esta moto ya tiene un Equipo asignado!' });
-  }
+  factura.setEmployees(Employees);
+  res.json(factura);
 });
 
 routerFactura.put('/:id', async (req, res) => {
