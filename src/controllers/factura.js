@@ -5,7 +5,7 @@ const {
 module.exports = {
   createFactura: async (factura) => Factura.create(factura),
   getFacturaMotoCombo: async (id) => Factura.findByPk(id, {
-    attributes: ['isPaid', 'id'],
+    attributes: ['isPaid', 'id', 'date'],
     include: [
       { model: Employee, required: false, attributes: ['names'] },
       {
