@@ -49,7 +49,7 @@ saleRoute.get('/', async (req, res) => {
         commission: employees[j].commission,
         total:
           respon[employees[j].id]?.total === undefined
-            ? 0
+            ? employees[j].totalFactura
             : respon[employees[j].id].total + employees[j].totalFactura,
       };
     }
