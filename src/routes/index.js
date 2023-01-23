@@ -17,5 +17,6 @@ router.use('/product', require('./product'));
 router.use('/retiroproducto', require('./drawoutProduct'));
 router.use('/retiro', require('./drawout'));
 router.use('/sale', require('./sale'));
+router.use('/report', require('./report'));
 
 module.exports = router;
