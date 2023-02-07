@@ -2,7 +2,8 @@ const reportRoute = require('express').Router();
 const { getDetailDate, getAllData } = require('../controllers/report');
 
 reportRoute.get('/', async (req, res) => {
-  res.json(await getAllData('2023/01/15'));
+  const { date } = req.query;
+  res.json(await getAllData(date));
 });
 
 reportRoute.get('/:id', async (req, res) => {
