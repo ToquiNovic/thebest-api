@@ -9,6 +9,7 @@ const {
   Person,
   Color,
   Brand,
+  DrawOutProduct,
 } = require('../db');
 
 module.exports = {
@@ -116,7 +117,7 @@ module.exports = {
       ],
     });
 
-    const newData = [
+    const header = [
       [
         'Fecha',
         'Total Factura',
@@ -141,6 +142,9 @@ module.exports = {
         'Comisión Empleado 2',
       ],
     ];
+
+    const newData = [];
+
     data.forEach((item) => {
       item.Facturas.forEach((factura) => {
         const objet = {};
@@ -217,6 +221,74 @@ module.exports = {
         newData.push(objet);
       });
     });
-    return newData.map((dat) => Object.values(dat));
+    return { header, data: newData };
+  },
+  getDataDrawout: async (startDate) => {
+    const data = await Fecha.findAll({
+      where: {
+        date: {
+          [Op.startsWith]: [startDate],
+        },
+      },
+      attributes: ['date'],
+      include: [
+        {
+          model: DrawOut,
+          required: false,
+          attributes: ['amount', 'description'],
+          include: [
+            {
+              model: Employee,
+              required: false,
+              attributes: ['dni', 'names', 'surnames', 'phone'],
+            },
+          ],
+        },
+      ],
+    });
+
+    const header = [
+      [
+        'Fecha',
+        'Cantidad',
+        'Descripcion',
+        'ID Empleado',
+        'Nombres',
+        'Apellidos',
+        'Telefono',
+      ],
+    ];
+
+    const newData = [];
+
+    data.forEach((item) => {
+      item.DrawOuts.forEach((draw) => {
+        const objet = {};
+
+        objet.date = item.date;
+        objet.amount = draw.amount;
+        objet.description = draw.description;
+        objet.dni = draw.Employee.dni;
+        objet.names = draw.Employee.names;
+        objet.surnames = draw.Employee.surnames;
+        objet.phone = draw.Employee.phone;
+        newData.push(objet);
+      });
+    });
+
+    return { header, data: newData };
+  },
+  getDataDrawoutProduct: async (startDate) => {
+    const data = await Fecha.findAll({
+      where: {
+        date: {
+          [Op.startsWith]: [startDate],
+        },
+      },
+      attributes: ['date'],
+      include: [{ model: DrawOutProduct, required: false }],
+    });
+
+    return data;
   },
 };
