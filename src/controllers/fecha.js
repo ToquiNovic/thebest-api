@@ -1,6 +1,6 @@
 const moment = require('moment-timezone');
 const {
-  Fecha, Factura, Motorcycle, Employee,
+  Fecha, Factura, Motorcycle, Employee, Team,
 } = require('../db');
 
 module.exports = {
@@ -29,9 +29,14 @@ module.exports = {
         {
           model: Factura,
           required: false,
-          attributes: ['id', 'isPaid'],
+          attributes: ['id', 'isPaid', 'total'],
           include: [
-            { model: Employee, required: false, attributes: ['id'] },
+            {
+              model: Employee,
+              required: false,
+              attributes: ['id'],
+              include: [{ model: Team, required: false, attributes: ['name'] }],
+            },
             {
               model: Motorcycle,
               required: false,
@@ -70,13 +75,11 @@ module.exports = {
       },
     });
 
-    const dataFactura = employee.dataValues.Facturas.map(
-      (elem) => ({
-        total: elem.total,
-        countEmployees: elem.Employees.length,
-        date: elem.Fecha.date,
-      }),
-    ).filter((elem) => elem.date === date);
+    const dataFactura = employee.dataValues.Facturas.map((elem) => ({
+      total: elem.total,
+      countEmployees: elem.Employees.length,
+      date: elem.Fecha.date,
+    })).filter((elem) => elem.date === date);
 
     const {
       names, surnames, commission, dni,
